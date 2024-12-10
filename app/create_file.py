@@ -7,7 +7,7 @@ def time_stamp() -> str:
     return datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 
-def create_file(file_name: str, directories: list[str]) -> str | bytes:
+def create_file(file_name: str, directories: list[str]) -> str:
     if len(directories) > 0:
         path = os.path.join(*directories)
         os.makedirs(path, exist_ok=True)
@@ -43,13 +43,11 @@ def main() -> None:
             if argv[dir_index] == "-f":
                 break
             directories.append(argv[dir_index])
-            dir_index += 1
+            path = os.path.join(*directories)
+            os.makedirs(path, exist_ok=True)
     if "-f" in argv:
         path = create_file(argv[-1], directories)
         create_content(path)
-    else:
-        path = os.path.join(*directories)
-        os.makedirs(path, exist_ok=True)
 
 
 if __name__ == "__main__":
